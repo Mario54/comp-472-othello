@@ -1,7 +1,7 @@
 from algorithms import maximize_reversals
-from orthello import B
+from othello import B
 
-import orthello
+import othello
 
 
 def white_algorithm(state, possible_moves):
@@ -12,7 +12,7 @@ def black_algorithm(state, moves):
     return 1
 
 
-class AutomaticGame(orthello.BaseGame):
+class AutomaticGame(othello.BaseGame):
     def draw_board(self, possible_moves):
         print(self.player, end=' ')
         print('( ', end='')
@@ -44,8 +44,8 @@ class AutomaticGame(orthello.BaseGame):
         print('GAME OVER')
         self.draw_board(None)
         print()
-        print('Winner is ' + orthello.determine_winner(self.state))
+        print('Winner is ' + othello.determine_winner(self.state))
 
 
 if __name__ == '__main__':
-    orthello.run(AutomaticGame())
+    othello.run(AutomaticGame())

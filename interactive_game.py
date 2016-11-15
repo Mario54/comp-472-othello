@@ -1,6 +1,7 @@
-import orthello
+import algorithms
+import othello
 
-from orthello import B, W
+from othello import B, W
 
 
 def simple_draw_board(state):
@@ -17,12 +18,12 @@ def simple_draw_board(state):
         print('-------------------------------------------------')
 
 
-class InteractiveGame(orthello.BaseGame):
+class InteractiveGame(othello.BaseGame):
     def draw_board(self, possible_moves):
         state_copy = [list(row) for row in self.state]
 
-        print('Black tiles: ' + str(orthello.count_tiles(self.state, B)))
-        print('White tiles: ' + str(orthello.count_tiles(self.state, W)))
+        print('Black tiles: ' + str(othello.count_tiles(self.state, B)))
+        print('White tiles: ' + str(othello.count_tiles(self.state, W)))
         print()
         print('Current player: ' + self.player)
         print()
@@ -33,6 +34,9 @@ class InteractiveGame(orthello.BaseGame):
         print()
 
     def input(self, possible_moves):
+        if self.player == B:
+            return algorithms.maximize_reversals(possible_moves)
+
         return int(input('Where would {} like to move? '.format(self.player)))
 
     def announce_winner(self):
@@ -40,11 +44,11 @@ class InteractiveGame(orthello.BaseGame):
         print('GAME OVER')
         simple_draw_board(self.state)
         print()
-        print('Winner is ' + orthello.determine_winner(self.state))
+        print('Winner is ' + othello.determine_winner(self.state))
 
     def before_move(self):
         return '\n' * 30
 
 
 if __name__ == '__main__':
-    orthello.run(InteractiveGame())
+    othello.run(InteractiveGame())
