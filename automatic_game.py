@@ -1,10 +1,11 @@
+from algorithms import maximize_reversals
 from orthello import B
 
 import orthello
 
 
 def white_algorithm(state, possible_moves):
-    return possible_moves.index(max(possible_moves, key=lambda m: len(m.reversals))) + 1
+    return maximize_reversals(possible_moves)
 
 
 def black_algorithm(state, moves):
