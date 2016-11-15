@@ -18,6 +18,11 @@ INITIAL_STATE = (
 )
 
 
+def is_completed(state):
+    return len(moves.available_moves(state, B)) == 0 and \
+           len(moves.available_moves(state, W)) == 0
+
+
 def determine_winner(state):
     num_black_tiles = count_tiles(state, B)
     num_white_tiles = count_tiles(state, W)
@@ -54,10 +59,10 @@ def run(game):
 
         possible_moves = list(moves.available_moves(game.state, game.player))
 
+        if is_completed(game.state):
+            return game.announce_winner()
+
         if len(possible_moves) == 0:
-            if len(moves.available_moves(game.state, other_player(game.player))) == 0:
-                return game.announce_winner()
-            else:
                 game.switch_player()
                 continue
 
