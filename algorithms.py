@@ -1,5 +1,3 @@
-from operator import itemgetter
-
 import math
 
 import moves
@@ -8,7 +6,6 @@ import othello
 
 def maximize_reversals(possible_moves):
     return possible_moves.index(max(possible_moves, key=lambda m: len(m.reversals))) + 1
-
 
 def minimax(state, player, utility_fn):
     full_state = (state, player)
