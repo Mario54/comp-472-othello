@@ -1,5 +1,6 @@
 from algorithms import maximize_reversals
 from othello import B
+from interactive_game import simple_draw_board
 
 import othello
 
@@ -42,7 +43,7 @@ class AutomaticGame(othello.BaseGame):
     def announce_winner(self):
         print()
         print('GAME OVER')
-        self.draw_board(None)
+        simple_draw_board(self.state)
         print()
         print('Winner is ' + othello.determine_winner(self.state))
 
