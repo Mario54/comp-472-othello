@@ -3,8 +3,10 @@ import random
 import moves
 from time_limit import time_limit, TimeoutException
 
-W = 'W'
-B = 'B'
+W = '□'
+B = '■'
+# W = 'W'
+# B = 'B'
 
 INITIAL_STATE = (
     (0, 0, 0, 0, 0, 0, 0, 0),

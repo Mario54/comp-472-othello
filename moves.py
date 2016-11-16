@@ -1,6 +1,8 @@
 from collections import namedtuple
 from itertools import product
 
+from othello import B, W
+
 Position = namedtuple('Position', ['x', 'y'])
 Move = namedtuple('Move', ['position', 'reversals'])
 
@@ -16,7 +18,7 @@ def get_tile(state, position):
 
 
 def find_move(state, player, position_sequence):
-    opposite_player = 'B' if player == 'W' else 'W'
+    opposite_player = B if player == W else W
 
     valid = False
     reversals = []
