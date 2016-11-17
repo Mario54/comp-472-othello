@@ -6,6 +6,14 @@ import othello
 from othello import W, B
 
 
+def simple_cutoff_test(state, depth):
+    return othello.is_completed(state) or depth == 10
+
+
+def heuristic(board, player):
+    len(moves.find_tiles(board, player)) - len(moves.find_tiles(board, othello.other_player(player)))
+
+
 class TestMinimax(TestCase):
     def test_minimax_returns_an_action_for_white(self):
         state = (
@@ -21,17 +29,13 @@ class TestMinimax(TestCase):
 
         player = W
 
-        def utility_fn(s):
-            if othello.determine_winner(s) == W:
-                return 1
-            else:
-                return -1
-
         possible_moves = moves.available_moves(state, player)
 
-        action = algorithms.minimax(state, player, utility_fn)
+        action = algorithms.minimax(possible_moves, state, player,
+                                    cutoff_test=simple_cutoff_test,
+                                    heuristic_fn=heuristic)
 
-        self.assertTrue(action in possible_moves)
+        self.assertTrue(0 <= action < len(possible_moves))
 
     def test_minimax_returns_an_action_for_black(self):
         state = (
@@ -47,14 +51,10 @@ class TestMinimax(TestCase):
 
         player = B
 
-        def utility_fn(s):
-            if othello.determine_winner(s) == B:
-                return 1
-            else:
-                return -1
-
         possible_moves = moves.available_moves(state, player)
 
-        action = algorithms.minimax(state, player, utility_fn)
+        action = algorithms.minimax(possible_moves, state, player,
+                                    cutoff_test=simple_cutoff_test,
+                                    heuristic_fn=heuristic)
 
-        self.assertTrue(action in possible_moves)
+        self.assertTrue(0 <= action < len(possible_moves))
