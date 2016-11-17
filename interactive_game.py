@@ -35,7 +35,11 @@ class InteractiveGame(othello.BaseGame):
 
     def input(self, possible_moves):
         if self.player == B:
-            return algorithms.maximize_reversals(possible_moves)
+            choice = algorithms.minimax_mario(possible_moves, self.state, self.player)
+
+            print('The AI picked move #{}'.format(choice))
+
+            return choice
 
         return int(input('Where would {} like to move? '.format(self.player)))
 
@@ -47,7 +51,7 @@ class InteractiveGame(othello.BaseGame):
         print('Winner is ' + othello.determine_winner(self.state))
 
     def before_move(self):
-        return '\n' * 30
+        return '\n' * 5
 
 
 if __name__ == '__main__':

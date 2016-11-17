@@ -1,15 +1,15 @@
-from algorithms import maximize_reversals
+import algorithms
 from othello import B
 
 import othello
 
 
-def white_algorithm(state, possible_moves):
-    return maximize_reversals(possible_moves)
+def white_algorithm(state, player, possible_moves):
+    return algorithms.minimax_mario(possible_moves, state, player)
 
 
-def black_algorithm(state, moves):
-    return 1
+def black_algorithm(state, player, moves):
+    return algorithms.maximize_reversals(moves)
 
 
 class AutomaticGame(othello.BaseGame):
@@ -33,9 +33,9 @@ class AutomaticGame(othello.BaseGame):
 
     def input(self, possible_moves):
         if self.player == B:
-            choice = black_algorithm(self.state, possible_moves)
+            choice = black_algorithm(self.state, self.player, possible_moves)
         else:
-            choice = white_algorithm(self.state, possible_moves)
+            choice = white_algorithm(self.state, self.player, possible_moves)
 
         return choice
 
