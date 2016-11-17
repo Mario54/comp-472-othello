@@ -5,20 +5,20 @@ from interactive_game import simple_draw_board
 import othello
 
 
-def white_algorithm(state, player, possible_moves):
-    return algorithms.minimax_mario(possible_moves, state, player)
+def white_algorithm(state, possible_moves):
+    return algorithms.minimax_mario(possible_moves, state)
 
 
-def black_algorithm(state, player, moves):
+def black_algorithm(state, moves):
     return algorithms.maximize_reversals(moves)
 
 
 class AutomaticGame(othello.BaseGame):
     def draw_board(self, possible_moves):
-        print(self.player, end=' ')
+        print(self.state.player, end=' ')
         print('( ', end='')
 
-        for row in self.state:
+        for row in self.state.board:
             print('( ', end='')
             for tile in row:
                 if str(tile) != '0':
@@ -33,17 +33,17 @@ class AutomaticGame(othello.BaseGame):
         print()
 
     def input(self, possible_moves):
-        if self.player == B:
-            choice = black_algorithm(self.state, self.player, possible_moves)
+        if self.state.player == B:
+            choice = black_algorithm(self.state, possible_moves)
         else:
-            choice = white_algorithm(self.state, self.player, possible_moves)
+            choice = white_algorithm(self.state, possible_moves)
 
         return choice
 
     def announce_winner(self):
         print()
         print('GAME OVER')
-        simple_draw_board(self.state)
+        simple_draw_board(self.state.board)
         print()
         print('Winner is ' + othello.determine_winner(self.state))
 

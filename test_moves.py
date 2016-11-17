@@ -3,9 +3,7 @@ from unittest import TestCase
 import moves
 
 from moves import Move
-
-W = 'W'
-B = 'B'
+from othello import B, W, State
 
 
 class TestFindNextMoves(TestCase):
@@ -28,7 +26,7 @@ class TestFindNextMoves(TestCase):
                                                                                                             m.position]))
 
     def test_find_moves_black(self):
-        state = (
+        board = (
             (0, 0, 0, 0, 0, 0, 0, 0),
             (0, 0, 0, 0, 0, 0, 0, 0),
             (0, 0, 0, 0, 0, 0, 0, 0),
@@ -39,6 +37,8 @@ class TestFindNextMoves(TestCase):
             (0, 0, 0, 0, 0, 0, 0, 0)
         )
 
+        state = State(board, player=B)
+
         expected = (
             Move((3, 2), reversals=((3, 3),)),
             Move((2, 3), reversals=((3, 3),)),
@@ -46,13 +46,13 @@ class TestFindNextMoves(TestCase):
             Move((5, 4), reversals=((4, 4),))
         )
 
-        actual = moves.available_moves(state, player='B')
+        actual = moves.available_moves(state)
 
         self.assertEqual(set(expected), set(actual))
         self.assertEqual(len(expected), len(actual))
 
     def test_find_moves_black_2(self):
-        state = (
+        board = (
             (0, 0, 0, 0, 0, 0, 0, 0),
             (0, 0, 0, 0, 0, 0, 0, 0),
             (0, 0, 0, 0, 0, B, 0, 0),
@@ -63,6 +63,8 @@ class TestFindNextMoves(TestCase):
             (0, 0, 0, 0, 0, 0, 0, 0)
         )
 
+        state = State(board, player=B)
+
         expected = (
             Move((2, 3), reversals=((3, 3),)),
             Move((3, 2), reversals=((3, 3),)),
@@ -72,13 +74,13 @@ class TestFindNextMoves(TestCase):
             Move((2, 2), reversals=((3, 3),))
         )
 
-        actual = moves.available_moves(state, player='B')
+        actual = moves.available_moves(state)
 
         self.assertEqual(set(expected), set(actual))
         self.assertEqual(len(expected), len(actual))
 
     def test_find_moves_black_3(self):
-        state = (
+        board = (
             (0, 0, 0, 0, 0, 0, 0, 0),
             (0, 0, 0, 0, 0, 0, 0, 0),
             (0, 0, 0, B, W, 0, 0, 0),
@@ -89,6 +91,8 @@ class TestFindNextMoves(TestCase):
             (0, 0, 0, 0, 0, 0, 0, 0)
         )
 
+        state = State(board, player=B)
+
         expected = {
             Move((5, 2), reversals=((4, 2), (4, 3))),
             Move((5, 3), reversals=((4, 3),)),
@@ -97,13 +101,13 @@ class TestFindNextMoves(TestCase):
             Move((5, 5), reversals=((4, 4),))
         }
 
-        actual = moves.available_moves(state, player='B')
+        actual = moves.available_moves(state)
 
         self.assertEqual(expected, actual)
         self.assertEqual(len(expected), len(actual))
 
     def test_find_moves_black_4(self):
-        state = (
+        board = (
             (W, W, W, 0, W, W, W, W),
             (W, W, W, 0, 0, W, W, W),
             (W, 0, B, W, W, W, W, W),
@@ -113,6 +117,8 @@ class TestFindNextMoves(TestCase):
             (W, 0, 0, W, W, 0, 0, W),
             (0, 0, 0, W, 0, W, 0, 0)
         )
+
+        state = State(board, player=B)
 
         expected = (
             Move((3, 1), reversals=((3, 2), (3, 3))),
@@ -125,13 +131,13 @@ class TestFindNextMoves(TestCase):
             Move((7, 5), reversals=((6, 5),))
         )
 
-        actual = moves.available_moves(state, player=B)
+        actual = moves.available_moves(state)
 
         self.assertEqual(set(expected), set(actual))
         self.assertEqual(len(expected), len(actual))
 
     def test_find_moves_white(self):
-        state = (
+        board = (
             (0, 0, 0, 0, 0, 0, 0, 0),
             (0, 0, 0, 0, 0, 0, 0, 0),
             (0, 0, 0, 0, 0, B, 0, 0),
@@ -142,19 +148,21 @@ class TestFindNextMoves(TestCase):
             (0, 0, 0, 0, 0, 0, 0, 0)
         )
 
+        state = State(board, player=W)
+
         expected = (
             Move((3, 5), reversals=((3, 4),)),
             Move((5, 5), reversals=((4, 4),)),
             Move((7, 3), reversals=((6, 3), (4, 3), (5, 3)))
         )
 
-        actual = moves.available_moves(state, player='W')
+        actual = moves.available_moves(state)
 
         self.assertEqual(set(expected), set(actual))
         self.assertEqual(len(expected), len(actual))
 
     def test_find_moves_white_2(self):
-        state = (
+        board = (
             (0, 0, 0, 0, 0, 0, 0, 0),
             (0, 0, 0, 0, 0, 0, W, 0),
             (0, 0, 0, 0, 0, B, 0, 0),
@@ -165,16 +173,18 @@ class TestFindNextMoves(TestCase):
             (0, 0, 0, 0, 0, 0, 0, 0)
         )
 
+        state = State(board, player=W)
+
         expected = (
             Move((2, 5), reversals=((3, 5), (4, 5), (5, 5), (3, 4), (4, 3), (5, 2))),
         )
 
-        actual = moves.available_moves(state, player='W')
+        actual = moves.available_moves(state)
 
         self.assertSameMoves(expected, actual)
 
     def test_moves_black(self):
-        state = (
+        board = (
             (0, 0, 0, 0, 0, 0, 0, 0),
             (0, 0, 0, 0, 0, 0, 0, 0),
             (0, 0, 0, 0, 0, 0, 0, 0),
@@ -185,7 +195,9 @@ class TestFindNextMoves(TestCase):
             (0, 0, 0, 0, 0, 0, 0, 0)
         )
 
-        expected = (
+        state = State(board, player=B)
+
+        expected = State((
             (0, 0, 0, 0, 0, 0, 0, 0),
             (0, 0, 0, 0, 0, 0, 0, 0),
             (0, 0, 0, 0, 0, 0, 0, 0),
@@ -194,14 +206,14 @@ class TestFindNextMoves(TestCase):
             (0, 0, 0, 0, B, 0, 0, 0),
             (0, 0, 0, 0, 0, 0, 0, 0),
             (0, 0, 0, 0, 0, 0, 0, 0)
-        )
+        ), player=B)
 
-        actual = moves.move(state, player='B', position=moves.Position(4, 5))
+        actual = moves.move(state, position=moves.Position(4, 5))
 
         self.assertEqual(expected, actual)
 
     def test_moves_white(self):
-        state = (
+        board = (
             (0, 0, 0, 0, 0, W, 0, 0),
             (0, 0, 0, 0, 0, W, 0, 0),
             (0, 0, 0, B, B, W, 0, 0),
@@ -212,7 +224,9 @@ class TestFindNextMoves(TestCase):
             (0, 0, 0, 0, 0, W, 0, 0)
         )
 
-        expected = (
+        state = State(board, player=W)
+
+        expected = State((
             (0, 0, 0, 0, 0, W, 0, 0),
             (0, 0, 0, 0, 0, W, 0, 0),
             (0, 0, 0, B, B, W, 0, 0),
@@ -221,12 +235,9 @@ class TestFindNextMoves(TestCase):
             (0, 0, 0, W, W, W, W, W),
             (0, 0, 0, 0, 0, W, 0, 0),
             (0, 0, 0, 0, 0, W, 0, 0)
-        )
+        ), player=W)
 
-        actual = moves.move(state, player='W', position=moves.Position(2, 3))
-
-        for row in actual:
-            print(row)
+        actual = moves.move(state, position=moves.Position(2, 3))
 
         self.assertEqual(expected, actual)
 
