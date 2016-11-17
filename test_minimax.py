@@ -33,7 +33,7 @@ class TestMinimax(TestCase):
                                     cutoff_test=simple_cutoff_test,
                                     heuristic_fn=heuristic)
 
-        self.assertTrue(0 <= action < len(possible_moves))
+        self.assertTrue(1 <= action <= len(possible_moves))
 
     def test_minimax_returns_an_action_for_black(self):
         state = othello.State((
@@ -53,4 +53,4 @@ class TestMinimax(TestCase):
                                     cutoff_test=simple_cutoff_test,
                                     heuristic_fn=heuristic)
 
-        self.assertTrue(0 <= action < len(possible_moves))
+        self.assertTrue(1 <= action <= len(possible_moves))
