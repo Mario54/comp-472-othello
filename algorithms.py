@@ -83,4 +83,4 @@ def minimax(valid_moves, state, cutoff_test, heuristic_fn):
             best_value = action_value
             best_action = i
 
-    return best_action
+    return best_action + 1

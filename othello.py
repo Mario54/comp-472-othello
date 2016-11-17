@@ -1,7 +1,6 @@
 import random
 from collections import namedtuple
 
-import moves
 from time_limit import time_limit, TimeoutException
 
 W = '□'
@@ -20,13 +19,17 @@ INITIAL_BOARD = (
 
 
 def is_completed(state):
+    import moves
+
+    state_other_player = State(state.board, other_player(state.player))
+
     return len(moves.available_moves(state)) == 0 and \
-           len(moves.available_moves(state)) == 0
+           len(moves.available_moves(state_other_player)) == 0
 
 
 def determine_winner(state):
-    num_black_tiles = count_tiles(state.board, B)
-    num_white_tiles = count_tiles(state.board, W)
+    num_black_tiles = count_tiles(state, B)
+    num_white_tiles = count_tiles(state, W)
 
     if num_black_tiles == num_white_tiles:
         return None
@@ -56,6 +59,10 @@ class State:
     def __eq__(self, other):
         return self.board == other.board
 
+    @property
+    def empty_tiles(self):
+        return sum([1 for row in self.board for tile in row if tile == 0])
+
 
 class BaseGame:
     def __init__(self):
@@ -69,6 +76,8 @@ class BaseGame:
 
 
 def run(game):
+    import moves
+
     while True:
         print(game.before_move(), end='')
 
