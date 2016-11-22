@@ -1,5 +1,5 @@
 import algorithms
-from othello import B
+from othello import B, W
 from interactive_game import simple_draw_board
 
 import othello
@@ -46,6 +46,9 @@ class AutomaticGame(othello.BaseGame):
         simple_draw_board(self.state.board)
         print()
         print('Winner is ' + othello.determine_winner(self.state))
+        print()
+        print('Black tiles: ' + str(othello.count_tiles(self.state, B)))
+        print('White tiles: ' + str(othello.count_tiles(self.state, W)))
 
 
 if __name__ == '__main__':
