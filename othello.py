@@ -3,8 +3,8 @@ from collections import namedtuple
 
 from time_limit import time_limit, TimeoutException
 
-W = '□'
-B = '■'
+W = '⬤'
+B = '◯'
 
 INITIAL_BOARD = (
     (0, 0, 0, 0, 0, 0, 0, 0),

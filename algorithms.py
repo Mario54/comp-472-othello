@@ -9,6 +9,33 @@ def maximize_reversals(possible_moves):
     return possible_moves.index(max(possible_moves, key=lambda m: len(m.reversals))) + 1
 
 
+
+def minimax_hilary(valid_moves, state):
+    def heuristic(state):
+        '''
+        corners = (0,0)(0,7)(7,0)(7,7)
+        x-square = (1,1)(1,6)(6,1)(6,6)
+        c-square =
+        (0,1)(0,6)
+        (1,0)(1,7)
+        (6,0)(6,7)
+        (7,1)(7,6)
+
+        Gives more value if the play reaches the corners
+
+        - avoid x- and c-square
+        - try to reach around the forbidden area
+
+        '''
+        def heuristic(state):
+            corners = [[0, 0],[0, 7],[7, 0],[7, 7]]
+            if valid_moves in corners:
+                return 10
+            else:
+                return 1
+
+        return minimax(valid_moves, state, simple_cutoff_test, heuristic)
+
 def minimax_mario(valid_moves, current_state):
     corners = ((0, 0), (0, 7), (7, 0), (7, 7))
 
