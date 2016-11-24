@@ -41,6 +41,7 @@ class AutomaticGame(othello.BaseGame):
         return choice
 
     def announce_winner(self):
+        self.draw_board(None)
         print()
         print('GAME OVER')
         simple_draw_board(self.state.board)
