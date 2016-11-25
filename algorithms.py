@@ -46,7 +46,7 @@ def minimax_hilary(valid_moves, state):
         for move in moves.available_moves(state):
             if move.position in corners:
                 h += 10
-            if move.position in x_square or move.pos in c_square:
+            if move.position in x_square or move.position in c_square:
                 h += -1
             if move.position in l_square:
                 h += 5
