@@ -11,30 +11,52 @@ def maximize_reversals(possible_moves):
 
 
 def minimax_hilary(valid_moves, state):
+
+    '''
+    corners = (0,0),(0,7),(7,0),(7,7)
+    x-square = (1,1),(1,6),(6,1),(6,6)
+    c-square =
+    (0,1)(0,6)
+    (1,0)(1,7)
+    (6,0)(6,7)
+    (7,1)(7,6)
+
+    Gives more value if the play reaches the corners
+
+    - avoid x- and c-square
+    - try to reach around the forbidden area
+
+    '''
     def heuristic(state):
-        '''
-        corners = (0,0)(0,7)(7,0)(7,7)
-        x-square = (1,1)(1,6)(6,1)(6,6)
-        c-square =
-        (0,1)(0,6)
-        (1,0)(1,7)
-        (6,0)(6,7)
-        (7,1)(7,6)
+        h = 0
+        corners = ((0, 0), (0, 7),(7, 0), (7, 7))
+        x_square = ((1, 1), (1, 6), (6, 1), (6, 6))
+        c_square = (
+            (0, 1), (0, 6),
+            (1, 0), (1, 7),
+            (6, 0), (6, 7),
+            (7, 1), (7, 6)
+        )
+        l_square = (
+            (0, 2), (1, 2), (2, 2), (2, 1), (2, 0),
+            (0, 5), (1, 5), (2, 5), (2, 6), (2, 7),
+            (5, 0), (5, 1), (5, 2), (6, 2), (7, 2),
+            (7, 5), (6, 5), (5, 5), (5, 6), (5, 7)
+        )
+        for move in moves.available_moves(state):
+            if move.position in corners:
+                h += 10
+            if move.position in x_square or move.pos in c_square:
+                h += -1
+            if move.position in l_square:
+                h += 5
 
-        Gives more value if the play reaches the corners
+        return h
 
-        - avoid x- and c-square
-        - try to reach around the forbidden area
+    def simple_cutoff_test(state, depth):
+        return othello.is_completed(state) or depth == 4
 
-        '''
-        def heuristic(state):
-            corners = [[0, 0],[0, 7],[7, 0],[7, 7]]
-            if valid_moves in corners:
-                return 10
-            else:
-                return 1
-
-        return minimax(valid_moves, state, simple_cutoff_test, heuristic)
+    return minimax(valid_moves, state, simple_cutoff_test, heuristic)
 
 def minimax_mario(valid_moves, current_state):
     corners = ((0, 0), (0, 7), (7, 0), (7, 7))

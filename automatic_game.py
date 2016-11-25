@@ -6,11 +6,13 @@ import othello
 
 
 def white_algorithm(state, possible_moves):
-    return algorithms.minimax_mario(possible_moves, state)
+    return algorithms.minimax_hilary(possible_moves, state)
+    # return algorithms.maximize_reversals(possible_moves)
 
 
 def black_algorithm(state, moves):
-    return algorithms.maximize_reversals(moves)
+    # return algorithms.maximize_reversals(moves)
+    return algorithms.minimax_mario(moves, state)
 
 
 class AutomaticGame(othello.BaseGame):
