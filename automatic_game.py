@@ -6,11 +6,12 @@ import othello
 
 
 def white_algorithm(state, possible_moves):
-    return algorithms.minimax_mario(possible_moves, state)
+    return algorithms.minimax_hilary(possible_moves, state)
 
 
 def black_algorithm(state, moves):
     return algorithms.maximize_reversals(moves)
+    # return algorithms.minimax_mario(moves, state)
 
 
 class AutomaticGame(othello.BaseGame):
@@ -46,7 +47,10 @@ class AutomaticGame(othello.BaseGame):
         print('GAME OVER')
         simple_draw_board(self.state.board)
         print()
-        print('Winner is ' + othello.determine_winner(self.state))
+        if othello.determine_winner(self.state) != None:
+            print('Winner is ' + othello.determine_winner(self.state))
+        else:
+            print('It\'s a TIE!')
         print()
         print('Black tiles: ' + str(othello.count_tiles(self.state, B)))
         print('White tiles: ' + str(othello.count_tiles(self.state, W)))
