@@ -95,36 +95,36 @@ def minimax_mario_2(valid_moves, current_state):
     )
 
     def heuristic(state):
-        corner_feature = len([corner for corner in corners if state.board[corner[1]][corner[0]]])
-        near_corner_feature = len([pos for pos in near_corner if state.board[pos[1]][pos[0]]])
+        possible_moves = moves.available_moves(state)
+
+        corner_feature = len([corner for corner in corners if state.board[corner[1]][corner[0]] == state.player])
+        near_corner_feature = len([pos for pos in near_corner if state.board[pos[1]][pos[0]] == state.player])
         tiles_count = len(moves.find_tiles(state)) - len(moves.find_tiles(state, othello.other_player(state.player)))
-        count_moves = len(moves.available_moves(state))
+        count_moves = len(possible_moves)
         immune_tiles = len(utils.immune_tiles(state))
+        corner_in_move = len([m.position for m in possible_moves if m.position in corners])
 
-        corner_feature_value = 5
-        near_corner_value = -1
-        tiles_count_value = 1
-        count_moves_value = 2
+        corner_feature_value = 15
+        near_corner_value = -8
+        tiles_count_value = 1 / 2
+        count_moves_value = 3
+        immune_tiles_value = 1 / 4
+        corner_in_move_value = 1 / 2
 
-        near_end_of_game = state.empty_tiles < 10
-        early_game = state.empty_tiles > 35
+        near_end_of_game = state.empty_tiles < 8
 
-        if early_game:
-            immune_tiles_value = 1/4
-        elif near_end_of_game:
+        if near_end_of_game:
             tiles_count_value = 2
-            immune_tiles_value = 1/4
-        else:
-            immune_tiles_value = 1/4
 
         return corner_feature * corner_feature_value + \
-            near_corner_feature * near_corner_value + \
-            tiles_count * tiles_count_value + \
-            count_moves * count_moves_value + \
-            immune_tiles * immune_tiles_value
+               near_corner_feature * near_corner_value + \
+               tiles_count * tiles_count_value + \
+               count_moves * count_moves_value + \
+               immune_tiles * immune_tiles_value + \
+               corner_in_move * corner_in_move_value
 
     def simple_cutoff_test(state, depth):
-        return othello.is_completed(state) or depth == 3
+        return othello.is_completed(state) or depth == 4
 
     return minimax(valid_moves, current_state, simple_cutoff_test, heuristic)
 
