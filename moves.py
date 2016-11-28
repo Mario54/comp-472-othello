@@ -8,6 +8,10 @@ Move = namedtuple('Move', ['position', 'reversals'])
 
 
 def find_tiles(state, player=None):
+    """
+    Finds all the tiles in the board owned by a player.
+    If the player parameter is used, it ignores the player stored in state.player.
+    """
     if player is None:
         player = state.player
 
@@ -17,6 +21,12 @@ def find_tiles(state, player=None):
 
 
 def find_move(state, position_sequence):
+    """
+    If there is one, returns a move that can be made in a linear sequence. This can work with diagonal, horizontal and
+    vertical sequences.
+
+    If there is no move available, returns None.
+    """
     opposite_player = B if state.player == W else W
 
     valid = False
@@ -63,6 +73,9 @@ def linear_sequences(position):
 
 
 def moves(state, position):
+    """
+    Finds all valid moves from a certain position on the board.
+    """
     pos_sequences = linear_sequences(position)
 
     valid_moves = [m for m in
@@ -77,9 +90,8 @@ def flatten(lst):
 
 def available_moves(state):
     """
-
-    :param state: Board (8x8 tuple)
-    :param player: 'W' or 'B'
+    Finds all the moves available for the current player
+    :param state othello.State
     """
     avail_moves = flatten([moves(state, position) for position in find_tiles(state)])
 
@@ -104,6 +116,9 @@ def copy_board(board):
 
 
 def move(state, position):
+    """
+    Updates the current state with a move at the position specified.
+    """
     possible_moves = available_moves(state)
     valid_positions = [m.position for m in possible_moves]
 

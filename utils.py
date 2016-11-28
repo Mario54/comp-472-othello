@@ -7,6 +7,9 @@ def all_captured(seq, state):
 
 
 def immune_tiles(state):
+    """
+    Counts the number of tiles that are immune (cannot be turned).
+    """
     immune = set()
 
     for pos in moves.find_tiles(state):

@@ -19,6 +19,9 @@ INITIAL_BOARD = (
 
 
 def is_completed(state):
+    """
+    Checks if a game is completed (if none of the player can move).
+    """
     import moves
 
     state_other_player = State(state.board, other_player(state.player))
@@ -46,6 +49,9 @@ def other_player(current_player):
 
 
 class State:
+    """
+    Represents a state in the othello game. It stores the state of the board and the current player.
+    """
     def __init__(self, board=INITIAL_BOARD, player=B):
         self.player = player
         self.board = board
@@ -76,6 +82,10 @@ class BaseGame:
 
 
 def run(game):
+    """
+    Executes an othello game, taking in a game object that inherits from BaseGame.
+    It returns when the game has completed.
+    """
     import moves
 
     while True:

@@ -130,6 +130,12 @@ def minimax_mario_2(valid_moves, current_state):
 
 
 def minimax(valid_moves, state, cutoff_test, heuristic_fn):
+    """
+    Implementation for the minimax algorithm, with alpha-beta pruning, evaluation function and a cutoff test.
+
+    Returns the index for the move that was selected from valid_moves.
+    """
+
     def actions(s):
         return moves.available_moves(s)
 
