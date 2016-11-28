@@ -17,7 +17,6 @@ def black_algorithm(state, moves):
 class AutomaticGame(othello.BaseGame):
     def draw_board(self, possible_moves):
         print(self.state.player, end=' ')
-        print('( ', end='')
 
         for row in self.state.board:
             print('( ', end='')
@@ -29,7 +28,7 @@ class AutomaticGame(othello.BaseGame):
 
                 print(' ', end='')
 
-            print('), ', end='')
+            print(') ', end='')
 
         print()
 
