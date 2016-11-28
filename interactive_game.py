@@ -48,7 +48,11 @@ class InteractiveGame(othello.BaseGame):
         print('GAME OVER')
         simple_draw_board(self.state.board)
         print()
-        print('Winner is ' + othello.determine_winner(self.state))
+        if othello.determine_winner(self.state) is not None:
+            print('Winner is ' + othello.determine_winner(self.state))
+        else:
+            print('It\'s a TIE!')
+        print()
 
     def before_move(self):
         return '\n' * 5
