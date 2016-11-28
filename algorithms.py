@@ -9,9 +9,7 @@ def maximize_reversals(possible_moves):
     return possible_moves.index(max(possible_moves, key=lambda m: len(m.reversals))) + 1
 
 
-
 def minimax_hilary(valid_moves, state):
-
     '''
     corners = (0,0),(0,7),(7,0),(7,7)
     x-square = (1,1),(1,6),(6,1),(6,6)
@@ -27,9 +25,10 @@ def minimax_hilary(valid_moves, state):
     - try to reach around the forbidden area
 
     '''
+
     def heuristic(state):
         h = 0
-        corners = ((0, 0), (0, 7),(7, 0), (7, 7))
+        corners = ((0, 0), (0, 7), (7, 0), (7, 7))
         x_square = ((1, 1), (1, 6), (6, 1), (6, 6))
         c_square = (
             (0, 1), (0, 6),
@@ -58,11 +57,12 @@ def minimax_hilary(valid_moves, state):
 
     return minimax(valid_moves, state, simple_cutoff_test, heuristic)
 
+
 def minimax_mario(valid_moves, current_state):
     corners = ((0, 0), (0, 7), (7, 0), (7, 7))
 
     def heuristic(state):
-        corner_feature = len([corner for corner in corners if state.board[corner[1]][corner[0]]])
+        corner_feature = len([corner for corner in corners if state.board[corner[1]][corner[0]] == state.player])
         tiles_count = len(moves.find_tiles(state)) - len(moves.find_tiles(state, othello.other_player(state.player)))
         count_moves = len(moves.available_moves(state))
 
