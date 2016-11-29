@@ -22,13 +22,14 @@ class InteractiveGame(othello.BaseGame):
     def draw_board(self, possible_moves):
         state_copy = [list(row) for row in self.state.board]
 
-        print('Black tiles: ' + str(othello.count_tiles(self.state, B)))
-        print('White tiles: ' + str(othello.count_tiles(self.state, W)))
+        print(B + ' tiles: ' + str(othello.count_tiles(self.state, B)))
+        print(W + ' tiles: ' + str(othello.count_tiles(self.state, W)))
         print()
         print('Current player: ' + self.state.player)
         print()
+
         for i, move in enumerate(possible_moves):
-            state_copy[move.position.y][move.position.x] = i + 1
+            state_copy[move.position.y][move.position.x] = str(i+1)
 
         simple_draw_board(state_copy)
         print()
